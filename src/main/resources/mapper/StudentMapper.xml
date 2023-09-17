@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 称为命名空间，一般是dao的类全限定名于二级缓存隔离数据-->
+<mapper namespace="com.qianfen.mapper.StudentMapper">
+
+
+    <!-- 开启二级缓存
+         type="" 用于自定义二级缓存
+         size="1000"表示当前mapper(命名空间下)最多存储 1000条数据
+          flushInterval="60000"  配置缓存有效期 没个60s 都会自动清空缓存一次
+                                   尽可能保证数据的新鲜 保证一致性
+           eviction="FIFO"  缓存满了以后 淘汰策略
+                            FIFO 最先缓存 最先删除
+                            LRU 最近最少使用原则
+    -->
+    <cache size="1000" flushInterval="60000" eviction="LRU" ></cache>
+
+    <!--
+    <select标签 表示内部sql用于查询
+        id="findAllStudent" 表示该查询对应哪个方法
+        resultType="com.qianfen.entity.Student" 配置的类型是将查询结果的每一行
+            转化为那种类型的对象
+    -->
+<!--    <select id="findAllStudent" resultType="com.qianfen.entity.Student">-->
+<!--        select * from java2310-->
+<!--    </select>-->
+
+    <resultMap id="studentMap1" type="com.qianfen.entity.Student">
+        <!-- 配置左表 学生表-->
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="age" property="age"></result>
+        <result column="sex" property="sex"></result>
+        <result column="height" property="height"></result>
+        <result column="date_time" property="dateTime"></result>
+        <!--  映射右表
+            collection 配置一对多的右表，将多行右表中的结果转化为集合
+            property="scoreList" 对应Student属性的成绩集合
+            column="id" 左表关联的列
+            ofType="com.qiafen.entity.Score" 表示同一个学生对应的每一个成绩转化为一个Score对象 放置到list集合中
+        -->
+        <collection column="id" property="scoreList" ofType="com.qianfen.entity.Score">
+            <id column="id" property="id"></id>
+            <result column="course" property="course"></result>
+            <result column="score" property="score"></result>
+            <!--  一对多  关联的列 尽量使用右表的值  -->
+            <result column="student_id" property="studentId"></result>
+        </collection>
+    </resultMap>
+
+    <select id="findAllStudentWithScore" resultMap="studentMap1">
+        select j.*,s.* from java2310 j left join score s on s.student_id = j.id;
+    </select>
+
+<!--    <resultMap id="studentMap2" type="com.qianfen.entity.Student">-->
+<!--        &lt;!&ndash; 配置左表 学生表&ndash;&gt;-->
+<!--        <id column="id" property="id"></id>-->
+<!--        <result column="name" property="name"></result>-->
+<!--        <result column="age" property="age"></result>-->
+<!--        <result column="sex" property="sex"></result>-->
+<!--        <result column="height" property="height"></result>-->
+<!--        <result column="date_time" property="dateTime"></result>-->
+<!--        &lt;!&ndash;  映射右表-->
+<!--            collection 配置一对多的右表，将多行右表中的结果转化为集合-->
+<!--            property="scoreList" 对应Student属性的成绩集合-->
+<!--            column="id" 左表关联的列-->
+<!--            ofType="com.qiafen.entity.Score" 表示同一个学生对应的每一个成绩转化为一个Score对象 放置到list集合中-->
+<!--        &ndash;&gt;-->
+<!--        <collection column="id" property="roleList" ofType="com.qianfen.entity.Role">-->
+<!--            <id column="roleid" property="roleId"></id>-->
+<!--            <result column="rolename" property="roleName"></result>-->
+<!--            &lt;!&ndash;  一对多  关联的列 尽量使用右表的值  &ndash;&gt;-->
+<!--            <result column="student_id" property="studentId"></result>-->
+<!--        </collection>-->
+<!--    </resultMap>-->
+<!--    <select id="findAllStudentWithRole" resultMap="studentMap2">-->
+<!--        select j.*,r.* from java2310 j-->
+<!--            left join student_role_tb sr on sr.studentid = j.id-->
+<!--            left join role_tb r on sr.roleid = r.roleid;-->
+<!--    </select>-->
+
+    <!--
+        select *  from java2310 where  name like concat('%','洋','%') and age = 17
+    -->
+    <select id="conditionQuery" resultType="com.qianfen.entity.Student">
+        select id,name,age,sex,height,date_time from java2310
+        <where>
+            <if test="name!=null and name!=''">
+                and  name like concat('%',#{name},'%')
+            </if>
+            <if test="sex!=null and sex != ''">
+                and sex = #{sex}
+            </if>
+            <if test="age!=null and age > 0">
+                and age = #{age}
+            </if>
+            <if test="height!=null and height > 0">
+                and height = #{height}
+            </if>
+            <if test="dateTime!=null and dateTime != ''">
+                and date_time = #{dateTime}
+            </if>
+        </where>
+    </select>
+</mapper>
+
+

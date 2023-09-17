@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入vue-->
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>v-if</h1>
+        <!--v-if="flag"  获取vue实例中属性 flag ，根据flag配置的属性是否显示-->
+        <div v-if="flag" >
+            flag 为true
+        </div>
+
+        <h1>v-for</h1>
+        <div v-if="age<12">
+            小学生
+        </div>
+        <div v-else-if="age<18">
+            中学生
+        </div>
+        <div v-else>
+            大学生
+        </div>
+
+        <h1>v-show</h1>
+        <!-- v-show  和 v-if 效果一样 但是原理不同-->
+        <div v-show="flag">
+            flag 为true 显示---v-show
+        </div>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                flag:true,
+                age: 17
+            },
+            methods:{
+            }
+
+        })
+    </script>
+</body>
+</html>

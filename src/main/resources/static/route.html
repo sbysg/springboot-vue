@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入vue-->
+    <script src="js/vue.js"></script>
+
+    <!-- 引入 vue router  必须放在 引入vue的下面-->
+    <script src="js/vue-router.min.js"> </script>
+
+</head>
+<body>
+    <div id="app">
+        <!--  <router-link 配置点击事件用户 路由界面的切换
+            to="/foo" 配置切换路由的路径-->
+        <router-link to="/foo">foo</router-link>
+        <router-link to="/bar">bar</router-link>
+
+        <!--router-view 用于展示切换到对应路径的 路由界面-->
+        <router-view></router-view>
+    </div>
+
+    <script>
+        var Foo = {
+            template:'<div>foo</div>'
+        }
+        var Bar = {
+            template:'<div>bar</div>'
+        }
+        var routes = [
+            {
+                path:'/foo', // 路径
+                component:Foo // 界面
+            },
+            {
+                path:'/bar',  // 路径
+                component:Bar // 界面
+            }
+        ]
+        // 将路由组交给 路由管理器管理
+        var router = new VueRouter({
+            routes:routes
+        })
+        var vm = new Vue({
+            el:'#app',
+            data:{
+
+            },
+            methods:{
+
+            },
+            router // 将vue实例和路由管理器绑定
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianfen.mapper.ScoreMapper">
+
+    <resultMap id="scoreMap1" type="com.qianfen.entity.Score">
+        <!-- 配置左表-->
+        <id column="id" property="id"></id>
+        <result column="course" property="course"></result>
+        <result column="score" property="score"></result>
+        <result column="student_id" property="studentId"></result>
+
+        <!-- 配置右表  一对一-->
+        <association property="student" column="student_id" javaType="com.qianfen.entity.Student">
+            <id column="sid" property="id"></id>
+            <result column="name" property="name"></result>
+            <result column="sex" property="sex"></result>
+            <result column="age" property="age"></result>
+            <result column="height" property="height"></result>
+            <result column="date_time" property="dateTime"></result>
+        </association>
+
+    </resultMap>
+
+    <select id="findAllScoreWithStudent" resultMap="scoreMap1">
+        select s.*,j.* from score s left join java2310 j on s.student_id = j.id;
+    </select>
+</mapper>

@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入vue-->
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        count:{{count}}<br>
+        <button  v-on:click="count++">自增1</button>
+        <!--@click == v-on:click  是一种简化写法
+            @click="increment()"  调用的函数 如果没有参数，可以不加括号 @click="increment"-->
+        <button @click="increment()">自增1</button>
+
+        <button @click="say('hello world')">点击事件传递参数</button>
+    </div>
+
+    <script type="text/javascript">
+
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                count:0
+            },
+            methods:{
+                increment:function (){
+                    // this 当前vue 实例
+                    this.count++;
+                },
+                say:function (str){
+                    alert("传递参数："+str);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

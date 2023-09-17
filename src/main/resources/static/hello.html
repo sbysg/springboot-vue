@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+  <!-- 导入vue  安装-->
+  <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+    <h1>第一个vue</h1>
+    <!--view 界面部分，都在一个div中-->
+    <div id="app">
+      <!-- {{}} 插值表达式 用于获取vue实例中的数据，调用vue实例的方法 -->
+      msg:{{msg}}<br>
+      调用方法输出:{{say()}}
+    </div>
+    </div>
+
+    <!--model 数据部分-->
+    <script type="text/javascript">
+      // 创建一个vue实例对象
+      var vm = new Vue({
+        el:'#app',// 将当前vue实例和 div id为app的元素绑定
+        data:{  // vue实例中的数据
+          msg:'hello vue',
+          code:'6666'
+        },
+        methods:{
+          // 声明一个方法
+          say:function (){
+            return  "code:"+ this.code;
+          }
+
+        }
+      });
+    </script>
+
+</body>
+</html>

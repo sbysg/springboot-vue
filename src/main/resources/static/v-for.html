@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入vue-->
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>v-for 遍历数组</div>
+        <ol>
+            <li v-for="user in userArray">
+                id:{{user.id}}----name:{{user.name}}----sex:{{user.sex}}
+            </li>
+        </ol>
+        <ol>
+            <!--v-for="(value,key) in student"
+                 遍历student中每一个属性将属性名赋值给key，值赋值该value-->
+            <li v-for="(value,key) in student">
+                属性名：{{key}}----值：{{value}}
+            </li>
+        </ol>
+        <h1>遍历整数</h1>
+        <ol>
+            <li v-for="num in 10">
+                num:{{num}}
+            </li>
+        </ol>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el:'#app',
+            data: {
+                userArray: [
+                    {
+                        id: 100,
+                        name: "xiaoming",
+                        sex: 'F'
+                    },
+                    {
+                        id: 101,
+                        name: "王盛翔",
+                        sex: 'F'
+                    },
+                    {
+                        id: 102,
+                        name: "家里奥",
+                        sex: 'F'
+                    },
+                ],
+                student:{
+                    id:1000,
+                    studentName:'小明',
+                    age:18
+                }
+            },
+            methods:{
+
+            }
+        })
+    </script>
+</body>
+</html>
